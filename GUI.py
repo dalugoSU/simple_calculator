@@ -27,8 +27,6 @@ class CalculatorApp:
         global output
 
         output = tk.Text(main_frame, bg="white", font=(None, 15))
-        output.tag_configure("center", justify='center')
-        output.tag_add("center", "1.0", "end")
         output.place(relx=0.05, rely=0.05, relwidth=0.67, relheight=0.2)
 
     def number_buttons(self): # All number Buttons. Initialization and Placement. Each has command calling its designated function
@@ -193,6 +191,8 @@ class CalculatorApp:
 
 
 
+        
+     
 def start_calculator(): # This function is called by main to run calculator
     root = tk.Tk()
     CalculatorApp(root)
