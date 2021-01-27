@@ -31,60 +31,59 @@ class CalculatorApp:
 
     def number_buttons(self): # All number Buttons. Initialization and Placement. Each has command calling its designated function
         global button0, dotButton, button1, button2, button3, button4, button5, button6, button7, button8, button9
-
-        button0 = tk.Button(main_frame, text=0, bg="light gray", command=lambda: self.get_zero())
+        
+        button0 = tk.Button(main_frame, text=0, bg="light gray", font=(None, 10), command=lambda: self.get_zero())
         button0.place(relx=0.75, rely=0.75, relwidth=0.2, relheight=0.09)
 
-        dotButton = tk.Button(main_frame, text=".", bg="light gray", command=lambda: self.get_dot())
+        dotButton = tk.Button(main_frame, text=".", bg="light gray", font=(None, 10), command=lambda: self.get_dot())
         dotButton.place(relx=0.75, rely=0.86, relwidth=0.2, relheight=0.09)
 
-        button1 = tk.Button(main_frame, text=1, command=lambda: self.get_one())
+        button1 = tk.Button(main_frame, text=1, font=(None, 15), command=lambda: self.get_one())
         button1.place(relx=0.05, rely=0.75, relwidth=0.2, relheight=0.2)
 
-        button2 = tk.Button(main_frame, text=2, command=lambda: self.get_two())
+        button2 = tk.Button(main_frame, text=2, font=(None, 15), command=lambda: self.get_two())
         button2.place(relx=0.28, rely=0.75, relwidth=0.2, relheight=0.2)
 
-        button3 = tk.Button(main_frame, text=3, command=lambda: self.get_three())
+        button3 = tk.Button(main_frame, text=3, font=(None, 15), command=lambda: self.get_three())
         button3.place(relx=0.51, rely=0.75, relwidth=0.2, relheight=0.2)
 
-        button4 = tk.Button(main_frame, text=4, command=lambda: self.get_four())
+        button4 = tk.Button(main_frame, text=4, font=(None, 15), command=lambda: self.get_four())
         button4.place(relx=0.05, rely=0.52, relwidth=0.2, relheight=0.2)
 
-        button5 = tk.Button(main_frame, text=5, command=lambda: self.get_five())
+        button5 = tk.Button(main_frame, text=5, font=(None, 15), command=lambda: self.get_five())
         button5.place(relx=0.28, rely=0.52, relwidth=0.2, relheight=0.2)
 
-        button6 = tk.Button(main_frame, text=6, command=lambda: self.get_six())
+        button6 = tk.Button(main_frame, text=6, font=(None, 15), command=lambda: self.get_six())
         button6.place(relx=0.51, rely=0.52, relwidth=0.2, relheight=0.2)
 
-        button7 = tk.Button(main_frame, text=7, command=lambda: self.get_seven())
+        button7 = tk.Button(main_frame, text=7, font=(None, 15), command=lambda: self.get_seven())
         button7.place(relx=0.05, rely=0.3, relwidth=0.2, relheight=0.2)
 
-        button8 = tk.Button(main_frame, text=8, command=lambda: self.get_eight())
+        button8 = tk.Button(main_frame, text=8, font=(None, 15), command=lambda: self.get_eight())
         button8.place(relx=0.28, rely=0.3, relwidth=0.2, relheight=0.2)
 
-        button9 = tk.Button(main_frame, text=9, command=lambda: self.get_nine())
+        button9 = tk.Button(main_frame, text=9, font=(None, 15), command=lambda: self.get_nine())
         button9.place(relx=0.51, rely=0.3, relwidth=0.2, relheight=0.2)
 
     def operation_buttons(self): # Operational buttons. Initialization and placement. Each has command calling its designated function
         global multiply, divide, add, subtract, equal, clear
 
-        multiply = tk.Button(main_frame, text="X", bg="light gray", command=lambda: self.get_multiply())
+        multiply = tk.Button(main_frame, text="X", bg="light gray", font=(None, 10), command=lambda: self.get_multiply())
         multiply.place(relx=0.75, rely=0.63, relwidth=0.2, relheight=0.09)
 
-        divide = tk.Button(main_frame, text="/", bg="light gray", command=lambda: self.get_divide())
+        divide = tk.Button(main_frame, text="/", bg="light gray", font=(None, 10), command=lambda: self.get_divide())
         divide.place(relx=0.75, rely=0.53, relwidth=0.2, relheight=0.09)
 
-        add = tk.Button(main_frame, text="+", bg="light gray", command=lambda: self.get_add())
+        add = tk.Button(main_frame, text="+", bg="light gray", font=(None, 15), command=lambda: self.get_add())
         add.place(relx=0.75, rely=0.4, relwidth=0.2, relheight=0.09)
 
-        subtract = tk.Button(main_frame, text="-", bg="light gray", command=lambda: self.get_subtract())
+        subtract = tk.Button(main_frame, text="-", bg="light gray", font=(None, 15), command=lambda: self.get_subtract())
         subtract.place(relx=0.75, rely=0.3, relwidth=0.2, relheight=0.09)
 
-        equal = tk.Button(main_frame, text="=", bg="light green",
-                          command=lambda: [self.get_input(), self.clear_screen(), self.calculate(operation)])
+        equal = tk.Button(main_frame, text="=", bg="light green", font=(None, 15), command=lambda: [self.get_input(), self.clear_screen(), self.calculate(operation)])
         equal.place(relx=0.75, rely=0.15, relwidth=0.2, relheight=0.09)
 
-        clear = tk.Button(main_frame, text="CLEAR", bg="light green", command=lambda: self.clear_screen())
+        clear = tk.Button(main_frame, text="CLEAR", bg="light green", font=(None, 10), command=lambda: self.clear_screen())
         clear.place(relx=0.75, rely=0.05, relwidth=0.2, relheight=0.09)
 
     # Logic for all buttons & Performs Operation
