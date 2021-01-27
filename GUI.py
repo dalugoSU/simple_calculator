@@ -3,6 +3,9 @@ import GUI_CONSTANTS as gc # Imports constants from GUI_CONSTANTS file, these ar
 
 
 class CalculatorApp:
+    '''
+    Calculator Class. Contains GUI settings and Calculator Logic
+    '''
 
     def __init__(self, root): # Initializes each function/method that affects the GUI
         self.root = root
@@ -189,9 +192,8 @@ class CalculatorApp:
         output.delete("1.0", tk.END)
 
 
-
         
-     
+
 def start_calculator(): # This function is called by main to run calculator
     root = tk.Tk()
     CalculatorApp(root)
