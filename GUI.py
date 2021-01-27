@@ -1,10 +1,10 @@
 import tkinter as tk
-import GUI_CONSTANTS as gc
+import GUI_CONSTANTS as gc # Imports constants from GUI_CONSTANTS file, these are not meant to be changed
 
 
 class CalculatorApp:
 
-    def __init__(self, root):
+    def __init__(self, root): # Initializes each function/method that affects the GUI
         self.root = root
         self.main_screen()
         self.main_frame()
@@ -12,18 +12,18 @@ class CalculatorApp:
         self.number_buttons()
         self.operation_buttons()
 
-    def main_screen(self):
+    def main_screen(self): # Main Screen function. It gives the root window basic dimensions and title
         self.root.title(gc.WINDOW_TITLE)
         self.root.minsize(gc.MINX, gc.MINY)
         self.root.maxsize(gc.MAXX, gc.MAXY)
 
-    def main_frame(self):
+    def main_frame(self): # Main Screen where everything will sit. It is on top of the root window
         global main_frame
 
         main_frame = tk.Frame(self.root, bg="light grey")
         main_frame.pack(fill='both', expand=True)
 
-    def output_screen(self):
+    def output_screen(self): # Text Box that will show output
         global output
 
         output = tk.Text(main_frame, bg="white", font=(None, 15))
@@ -31,7 +31,7 @@ class CalculatorApp:
         output.tag_add("center", "1.0", "end")
         output.place(relx=0.05, rely=0.05, relwidth=0.67, relheight=0.2)
 
-    def number_buttons(self):
+    def number_buttons(self): # All number Buttons. Initialization and Placement. Each has command calling its designated function
         global button0, dotButton, button1, button2, button3, button4, button5, button6, button7, button8, button9
 
         button0 = tk.Button(main_frame, text=0, bg="light gray", command=lambda: self.get_zero())
@@ -67,7 +67,7 @@ class CalculatorApp:
         button9 = tk.Button(main_frame, text=9, command=lambda: self.get_nine())
         button9.place(relx=0.51, rely=0.3, relwidth=0.2, relheight=0.2)
 
-    def operation_buttons(self):
+    def operation_buttons(self): # Operational buttons. Initialization and placement. Each has command calling its designated function
         global multiply, divide, add, subtract, equal, clear
 
         multiply = tk.Button(main_frame, text="X", bg="light gray", command=lambda: self.get_multiply())
@@ -151,12 +151,12 @@ class CalculatorApp:
         if button9:
             output.insert(tk.END, gc.NINE)
 
-    def get_input(self):
+    def get_input(self): # This function gets the operation outputed in the text box and sets global variable operation equals to that
         global operation
 
         operation = output.get("1.0", tk.END)
-
-    def calculate(self, operation):
+    
+    def calculate(self, operation): # Takes operation from text box. Splits numbers and Operands and performs operation based on those.
         global numbers
 
         numbers_to_use = []
@@ -179,21 +179,21 @@ class CalculatorApp:
                 result = int(numbers_to_use[0] + numbers_to_use[1])
             else:
                 print("Nothing")
-        except IndexError:
+        except IndexError: # If user left open ended operation
             output.insert(tk.END, "ERROR")
             pass
-        except ZeroDivisionError:
+        except ZeroDivisionError: # If user attempts to divide by zero
             output.insert(tk.END, "ERROR - ZERO DIVISION")
 
         output.insert(tk.END, result)
 
-    def clear_screen(self):
+    def clear_screen(self): # Clears output text box
 
         output.delete("1.0", tk.END)
 
 
 
-def start_calculator():
+def start_calculator(): # This function is called by main to run calculator
     root = tk.Tk()
     CalculatorApp(root)
     root.mainloop()
