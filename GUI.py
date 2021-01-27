@@ -108,48 +108,48 @@ class CalculatorApp:
         output.insert(tk.END, gc.SUBTRACT)
 
     def get_zero(self):
-        if button0:
-            output.insert(tk.END, gc.ZERO)
+        
+        output.insert(tk.END, gc.ZERO)
 
     def get_dot(self):
-        if dotButton:
-            output.insert(tk.END, gc.DOT)
+        
+        output.insert(tk.END, gc.DOT)
 
     def get_one(self):
-        if button1:
-            output.insert(tk.END, gc.ONE)
+        
+        output.insert(tk.END, gc.ONE)
 
     def get_two(self):
-        if button2:
-            output.insert(tk.END, gc.TWO)
+        
+        output.insert(tk.END, gc.TWO)
 
     def get_three(self):
-        if button3:
-            output.insert(tk.END, gc.THREE)
+        
+        output.insert(tk.END, gc.THREE)
 
     def get_four(self):
-        if button4:
-            output.insert(tk.END, gc.FOUR)
+        
+        output.insert(tk.END, gc.FOUR)
 
     def get_five(self):
-        if button5:
-            output.insert(tk.END, gc.FIVE)
+        
+        output.insert(tk.END, gc.FIVE)
 
     def get_six(self):
-        if button6:
-            output.insert(tk.END, gc.SIX)
+        
+        output.insert(tk.END, gc.SIX)
 
     def get_seven(self):
-        if button7:
-            output.insert(tk.END, gc.SEVEN)
+        
+        output.insert(tk.END, gc.SEVEN)
 
     def get_eight(self):
-        if button8:
-            output.insert(tk.END, gc.EIGHT)
+        
+        output.insert(tk.END, gc.EIGHT)
 
     def get_nine(self):
-        if button9:
-            output.insert(tk.END, gc.NINE)
+        
+        output.insert(tk.END, gc.NINE)
 
     def get_input(self): # This function gets the operation outputed in the text box and sets global variable operation equals to that
         global operation
