@@ -154,28 +154,13 @@ class CalculatorApp:
         operation = output.get("1.0", ttk.END)
 
     def calculate(self, operation):  # Takes operation from text box. Splits numbers and Operands and performs operation based on those.
-        global numbers
 
-        numbers_to_use = []
-        operands = []
-        result = ''
+        result = int()
+        print(operation)
 
-        for item in operation.split(" "):
-            try:
-                numbers_to_use.append(float(item))
-            except ValueError:
-                operands.append(item)
         try:
-            if operands[0] == '-':
-                result = numbers_to_use[0] - numbers_to_use[1]
-            elif operands[0] == 'X':
-                result = numbers_to_use[0] * numbers_to_use[1]
-            elif operands[0] == '/':
-                result = numbers_to_use[0] / numbers_to_use[1]
-            elif operands[0] == '+':
-                result = numbers_to_use[0] + numbers_to_use[1]
-            else:
-                print("Nothing")
+            do = f'result = {operation}'
+            exec(do)
         except IndexError:  # If user left open ended operation
             output.insert(ttk.END, "ERROR")
             pass
