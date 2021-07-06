@@ -1,4 +1,5 @@
-import GUI as CALCULATOR
+from GUI import CalculatorApp
 
 if __name__ == "__main__":
-    CALCULATOR.start_calculator()
+    calculator = CalculatorApp()
+    calculator.run()

@@ -1,197 +1,188 @@
-import tkinter as ttk
-import GUI_CONSTANTS as gc  # Imports constants from GUI_CONSTANTS file, these are not meant to be changed
+# import tkinter as tk
+import tkinter as tk
+from GUI_CONSTANTS import WindowButtons, WindowDimensions, NumberButtons, OperationButtons, OutputScreen
+import sympy
+import logging
+
+logging.basicConfig(level=logging.INFO)
 
 
 class CalculatorApp:
 
-    def __init__(self, root):  # Initializes each function/method that affects the GUI
-        self.root = root
-        self.main_screen()
-        self.main_frame()
-        self.output_screen()
-        self.number_buttons()
-        self.operation_buttons()
+    def __init__(self):  # Initializes factors of calculator that affects the GUI
+        self._root = None
+        self._root_main_frame = None
+        self._output = None
+        self._button0 = None
+        self._dotButton = None
+        self._button1 = None
+        self._button2 = None
+        self._button3 = None
+        self._button4 = None
+        self._button5 = None
+        self._button6 = None
+        self._button7 = None
+        self._button8 = None
+        self._button9 = None
+        self._multiply = None
+        self._divide = None
+        self._add = None
+        self._subtract = None
+        self._equal = None
+        self._clear = None
+        self._operation = None
+        self._result = None
 
-    def main_screen(self):  # Main Screen function. It gives the root window basic dimensions and title
-        self.root.title(gc.WINDOW_TITLE)
-        self.root.minsize(gc.MINX, gc.MINY)
-        self.root.maxsize(gc.MAXX, gc.MAXY)
+    def __repr__(self):
+        return f"Tkinter Calculator "
 
-    def main_frame(self):  # Main Screen where everything will sit. It is on top of the root window
-        global main_frame
+    def run(self):
+        self._root = tk.Tk()
+        self._main_screen()
+        self._main_frame()
+        logging.info("Loaded main frame no error")
+        self._number_buttons()
+        logging.info("Loaded Buttons no Error")
+        self._operation_buttons()
+        self._output = tk.Text(self._root_main_frame, bg="white", font=(None, 15))
+        self._output.place(relx=OutputScreen.OUTPUT_REL_X, rely=OutputScreen.OUTPUT_REL_Y,
+                           relwidth=OutputScreen.OUTPUT_REL_WIDTH, relheight=OutputScreen.OUTPUT_REL_HEIGHT)
+        logging.info("Loaded output screen no Error")
+        logging.info("Initialized Calculator No Error")
+        self._root.mainloop()
 
-        main_frame = ttk.Frame(self.root, bg="light grey")
-        main_frame.pack(fill='both', expand=True)
+    def _main_screen(self):  # Main Screen function. It gives the root window basic dimensions and title
+        self._root.title(WindowDimensions.WINDOW_TITLE)
+        self._root.minsize(WindowDimensions.MIN_X, WindowDimensions.MAX_Y)
+        self._root.maxsize(WindowDimensions.MAX_X, WindowDimensions.MAX_Y)
 
-    def output_screen(self):  # Text Box that will show output
-        global output
+    def _main_frame(self):  # Main Screen where everything will sit. It is on top of the root window
+        self._root_main_frame = tk.Frame(self._root, bg="light grey")
+        self._root_main_frame.pack(fill='both', expand=True)
 
-        output = ttk.Text(main_frame, bg="white", font=(None, 15))
-        output.place(relx=0.05, rely=0.05, relwidth=0.67, relheight=0.2)
+    def _number_buttons(self):  # All number Buttons. Initialization and Placement. Each has command calling its designated function
+        self._button0 = tk.Button(self._root_main_frame, text=0, bg="light gray",
+                                  font=(None, 10), command=lambda: self._output_keypad_press(WindowButtons.ZERO))
+        self._button0.place(relx=NumberButtons.ZERO_REL_X, rely=NumberButtons.ZERO_REL_Y,
+                            relwidth=NumberButtons.ZERO_REL_WIDTH, relheight=NumberButtons.ZERO_REL_HEIGHT)
 
-    def number_buttons(self):  # All number Buttons. Initialization and Placement. Each has command calling its designated function
-        global button0, dotButton, button1, button2, button3, button4, button5, button6, button7, button8, button9
+        self._dotButton = tk.Button(self._root_main_frame, text=".", bg="light gray",
+                                    font=(None, 10), command=lambda: self._output_keypad_press(WindowButtons.DOT))
+        self._dotButton.place(relx=NumberButtons.DOT_REL_X, rely=NumberButtons.DOT_REL_Y,
+                              relwidth=NumberButtons.DOT_REL_WIDTH, relheight=NumberButtons.DOT_REL_HEIGHT)
 
-        button0 = ttk.Button(main_frame, text=0, bg="light gray", font=(None, 10), command=lambda: self.get_zero())
-        button0.place(relx=0.75, rely=0.75, relwidth=0.2, relheight=0.09)
+        self._button1 = tk.Button(self._root_main_frame, text=1, font=(None, 15),
+                                  command=lambda: self._output_keypad_press(WindowButtons.ONE))
+        self._button1.place(relx=NumberButtons.ONE_REL_X, rely=NumberButtons.ONE_REL_Y,
+                            relwidth=NumberButtons.ONE_REL_WIDTH, relheight=NumberButtons.ONE_REL_HEIGHT)
 
-        dotButton = ttk.Button(main_frame, text=".", bg="light gray", font=(None, 10), command=lambda: self.get_dot())
-        dotButton.place(relx=0.75, rely=0.86, relwidth=0.2, relheight=0.09)
+        self._button2 = tk.Button(self._root_main_frame, text=2, font=(None, 15),
+                                  command=lambda: self._output_keypad_press(WindowButtons.TWO))
+        self._button2.place(relx=NumberButtons.TWO_REL_X, rely=NumberButtons.TWO_REL_Y,
+                            relwidth=NumberButtons.TWO_REL_WIDTH, relheight=NumberButtons.TWO_REL_HEIGHT)
 
-        button1 = ttk.Button(main_frame, text=1, font=(None, 15), command=lambda: self.get_one())
-        button1.place(relx=0.05, rely=0.75, relwidth=0.2, relheight=0.2)
+        self._button3 = tk.Button(self._root_main_frame, text=3, font=(None, 15),
+                                  command=lambda: self._output_keypad_press(WindowButtons.THREE))
+        self._button3.place(relx=NumberButtons.THREE_REL_X, rely=NumberButtons.THREE_REL_Y,
+                            relwidth=NumberButtons.THREE_REL_WIDTH, relheight=NumberButtons.THREE_REL_HEIGHT)
 
-        button2 = ttk.Button(main_frame, text=2, font=(None, 15), command=lambda: self.get_two())
-        button2.place(relx=0.28, rely=0.75, relwidth=0.2, relheight=0.2)
+        self._button4 = tk.Button(self._root_main_frame, text=4, font=(None, 15),
+                                  command=lambda: self._output_keypad_press(WindowButtons.FOUR))
+        self._button4.place(relx=NumberButtons.FOUR_REL_X, rely=NumberButtons.FOUR_REL_Y,
+                            relwidth=NumberButtons.FOUR_REL_WIDTH, relheight=NumberButtons.FOUR_REL_HEIGHT)
 
-        button3 = ttk.Button(main_frame, text=3, font=(None, 15), command=lambda: self.get_three())
-        button3.place(relx=0.51, rely=0.75, relwidth=0.2, relheight=0.2)
+        self._button5 = tk.Button(self._root_main_frame, text=5, font=(None, 15),
+                                  command=lambda: self._output_keypad_press(WindowButtons.FIVE))
+        self._button5.place(relx=NumberButtons.FIVE_REL_X, rely=NumberButtons.FIVE_REL_Y,
+                            relwidth=NumberButtons.FIVE_REL_WIDTH, relheight=NumberButtons.FIVE_REL_HEIGHT)
 
-        button4 = ttk.Button(main_frame, text=4, font=(None, 15), command=lambda: self.get_four())
-        button4.place(relx=0.05, rely=0.52, relwidth=0.2, relheight=0.2)
+        self._button6 = tk.Button(self._root_main_frame, text=6, font=(None, 15),
+                                  command=lambda: self._output_keypad_press(WindowButtons.SIX))
+        self._button6.place(relx=NumberButtons.SIX_REL_X, rely=NumberButtons.SIX_REL_Y,
+                            relwidth=NumberButtons.SIX_REL_WIDTH, relheight=NumberButtons.SIX_REL_HEIGHT)
 
-        button5 = ttk.Button(main_frame, text=5, font=(None, 15), command=lambda: self.get_five())
-        button5.place(relx=0.28, rely=0.52, relwidth=0.2, relheight=0.2)
+        self._button7 = tk.Button(self._root_main_frame, text=7, font=(None, 15),
+                                  command=lambda: self._output_keypad_press(WindowButtons.SEVEN))
+        self._button7.place(relx=NumberButtons.SEVEN_REL_X, rely=NumberButtons.SEVEN_REL_Y,
+                            relwidth=NumberButtons.SEVEN_REL_WIDTH, relheight=NumberButtons.SEVEN_REL_HEIGHT)
 
-        button6 = ttk.Button(main_frame, text=6, font=(None, 15), command=lambda: self.get_six())
-        button6.place(relx=0.51, rely=0.52, relwidth=0.2, relheight=0.2)
+        self._button8 = tk.Button(self._root_main_frame, text=8, font=(None, 15),
+                                  command=lambda: self._output_keypad_press(WindowButtons.EIGHT))
+        self._button8.place(relx=NumberButtons.EIGHT_REL_X, rely=NumberButtons.EIGHT_REL_Y,
+                            relwidth=NumberButtons.EIGHT_REL_WIDTH, relheight=NumberButtons.EIGHT_REL_HEIGHT)
 
-        button7 = ttk.Button(main_frame, text=7, font=(None, 15), command=lambda: self.get_seven())
-        button7.place(relx=0.05, rely=0.3, relwidth=0.2, relheight=0.2)
+        self._button9 = tk.Button(self._root_main_frame, text=9, font=(None, 15),
+                                  command=lambda: self._output_keypad_press(WindowButtons.NINE))
+        self._button9.place(relx=NumberButtons.NINE_REL_X, rely=NumberButtons.NINE_REL_Y,
+                            relwidth=NumberButtons.NINE_REL_WIDTH, relheight=NumberButtons.NINE_REL_HEIGHT)
 
-        button8 = ttk.Button(main_frame, text=8, font=(None, 15), command=lambda: self.get_eight())
-        button8.place(relx=0.28, rely=0.3, relwidth=0.2, relheight=0.2)
+    def _operation_buttons(self):  # Operational buttons. Initialization and placement. Each has command calling its designated function
+        self._multiply = tk.Button(self._root_main_frame, text="X", bg="light gray",
+                                   font=(None, 10), command=lambda: self._output_keypad_press(WindowButtons.MULTIPLY))
+        self._multiply.place(relx=OperationButtons.MULTIPLY_REL_X, rely=OperationButtons.MULTIPLY_REL_Y,
+                             relwidth=OperationButtons.MULTIPLY_REL_WIDTH, relheight=OperationButtons.MULTIPLY_REL_HEIGHT)
 
-        button9 = ttk.Button(main_frame, text=9, font=(None, 15), command=lambda: self.get_nine())
-        button9.place(relx=0.51, rely=0.3, relwidth=0.2, relheight=0.2)
+        self._divide = tk.Button(self._root_main_frame, text="/", bg="light gray",
+                                 font=(None, 10), command=lambda: self._output_keypad_press(WindowButtons.DIVIDE))
+        self._divide.place(relx=OperationButtons.DIVIDE_REL_X, rely=OperationButtons.DIVIDE_REL_Y,
+                           relwidth=OperationButtons.DIVIDE_REL_WIDTH, relheight=OperationButtons.DIVIDE_REL_HEIGHT)
 
-    def operation_buttons(self):  # Operational buttons. Initialization and placement. Each has command calling its designated function
-        global multiply, divide, add, subtract, equal, clear
+        self._add = tk.Button(self._root_main_frame, text="+", bg="light gray",
+                              font=(None, 15), command=lambda: self._output_keypad_press(WindowButtons.ADD))
+        self._add.place(relx=OperationButtons.ADD_REL_X, rely=OperationButtons.ADD_REL_Y,
+                        relwidth=OperationButtons.ADD_REL_WIDTH, relheight=OperationButtons.ADD_REL_HEIGHT)
 
-        multiply = ttk.Button(main_frame, text="X", bg="light gray", font=(None, 10), command=lambda: self.get_multiply())
-        multiply.place(relx=0.75, rely=0.63, relwidth=0.2, relheight=0.09)
+        self._subtract = tk.Button(self._root_main_frame, text="-", bg="light gray",
+                                   font=(None, 15), command=lambda: self._output_keypad_press(WindowButtons.SUBTRACT))
+        self._subtract.place(relx=OperationButtons.SUBTRACT_REL_X, rely=OperationButtons.SUBTRACT_REL_Y,
+                             relwidth=OperationButtons.SUBTRACT_REL_WIDTH, relheight=OperationButtons.SUBTRACT_REL_HEIGHT)
 
-        divide = ttk.Button(main_frame, text="/", bg="light gray", font=(None, 10), command=lambda: self.get_divide())
-        divide.place(relx=0.75, rely=0.53, relwidth=0.2, relheight=0.09)
+        self._equal = tk.Button(self._root_main_frame, text="=", bg="light green", font=(None, 15),
+                                command=lambda: [self._get_input(), self._clear_screen(), self._calculate(self._operation)])
+        self._equal.place(relx=OperationButtons.EQUAL_REL_X, rely=OperationButtons.EQUAL_REL_Y,
+                          relwidth=OperationButtons.EQUAL_REL_WIDTH, relheight=OperationButtons.EQUAL_REL_HEIGHT)
 
-        add = ttk.Button(main_frame, text="+", bg="light gray", font=(None, 15), command=lambda: self.get_add())
-        add.place(relx=0.75, rely=0.4, relwidth=0.2, relheight=0.09)
-
-        subtract = ttk.Button(main_frame, text="-", bg="light gray", font=(None, 15),command=lambda: self.get_subtract())
-        subtract.place(relx=0.75, rely=0.3, relwidth=0.2, relheight=0.09)
-
-        equal = ttk.Button(main_frame, text="=", bg="light green", font=(None, 15), command=lambda: [self.get_input(), self.clear_screen(), self.calculate(operation)])
-        equal.place(relx=0.75, rely=0.15, relwidth=0.2, relheight=0.09)
-
-        clear = ttk.Button(main_frame, text="CLEAR", bg="light green", font=(None, 10), command=lambda: self.clear_screen())
-        clear.place(relx=0.75, rely=0.05, relwidth=0.2, relheight=0.09)
+        self._clear = tk.Button(self._root_main_frame, text="CLEAR", bg="light green",
+                                font=(None, 10), command=lambda: self._clear_screen())
+        self._clear.place(relx=OperationButtons.CLEAR_REL_X, rely=OperationButtons.CLEAR_REL_Y,
+                          relwidth=OperationButtons.CLEAR_REL_WIDTH, relheight=OperationButtons.CLEAR_REL_HEIGHT)
 
     # Logic for all buttons & Performs Operation
-
-    def get_multiply(self):
-
-        output.insert(ttk.END, gc.MULTIPLY)
-
-    def get_divide(self):
-
-        output.insert(ttk.END, gc.DIVIDE)
-
-    def get_add(self):
-
-        output.insert(ttk.END, gc.ADD)
-
-    def get_subtract(self):
-
-        output.insert(ttk.END, gc.SUBTRACT)
-
-    def get_zero(self):
-
-        output.insert(ttk.END, gc.ZERO)
-
-    def get_dot(self):
-
-        output.insert(ttk.END, gc.DOT)
-
-    def get_one(self):
-
-        output.insert(ttk.END, gc.ONE)
-
-    def get_two(self):
-
-        output.insert(ttk.END, gc.TWO)
-
-    def get_three(self):
-
-        output.insert(ttk.END, gc.THREE)
-
-    def get_four(self):
-
-        output.insert(ttk.END, gc.FOUR)
-
-    def get_five(self):
-
-        output.insert(ttk.END, gc.FIVE)
-
-    def get_six(self):
-
-        output.insert(ttk.END, gc.SIX)
-
-    def get_seven(self):
-
-        output.insert(ttk.END, gc.SEVEN)
-
-    def get_eight(self):
-
-        output.insert(ttk.END, gc.EIGHT)
-
-    def get_nine(self):
-
-        output.insert(ttk.END, gc.NINE)
-
-    def get_input(self):  # This function gets the operation outputed in the text box and sets global variable operation equals to that
-        global operation
-
-        operation = output.get("1.0", ttk.END)
-
-    def calculate(self, operation):  # Takes operation from text box. Splits numbers and Operands and performs operation based on those.
-        global numbers
-
-        numbers_to_use = []
-        operands = []
-        result = ''
-
-        for item in operation.split(" "):
-            try:
-                numbers_to_use.append(float(item))
-            except ValueError:
-                operands.append(item)
+    def _output_keypad_press(self, action):
         try:
-            if operands[0] == '-':
-                result = numbers_to_use[0] - numbers_to_use[1]
-            elif operands[0] == 'X':
-                result = numbers_to_use[0] * numbers_to_use[1]
-            elif operands[0] == '/':
-                result = numbers_to_use[0] / numbers_to_use[1]
-            elif operands[0] == '+':
-                result = numbers_to_use[0] + numbers_to_use[1]
-            else:
-                print("Nothing")
-        except IndexError:  # If user left open ended operation
-            output.insert(ttk.END, "ERROR")
-            pass
-        except ZeroDivisionError:  # If user attempts to divide by zero
-            output.insert(ttk.END, "ERROR - ZERO DIVISION")
+            int(action)
+            message = f"{action}"
+        except ValueError:
+            message = f" {action} "
+        self._output.insert(tk.END, message)
+        logging.info(f"Output on screen: {message}")
 
-        output.insert(ttk.END, result)
+    def _get_input(self):  # This function gets the operation in the text box and sets global variable operation equals to that
+        self._operation = self._output.get("1.0", tk.END)
+        logging.info(f"Got Operation: {self._operation}")
 
-    def clear_screen(self):  # Clears output text box
+    def _calculate(self, operation):  # Takes operation from text box. Splits numbers and Operands and performs operation based on those.
 
-        output.delete("1.0", ttk.END)
+        if '/' in operation.rstrip().strip(" "):
+            try:
+                self._result = float(sympy.sympify(operation.rstrip()))
+                self._output.insert(tk.END, self._result)
+                logging.info(f"Output result: {self._result}")
+            except TypeError:
+                self._output.insert(tk.END, "ERROR - ZERO DIVISION")
+                logging.info("Type error in _calculate; If zero division, ignore")
+            except IndexError:  # If user left open ended operation
+                self._output.insert(tk.END, "ERROR")
+                logging.info("Index Error in _calculate; If open ended operation, ignore")
+                pass
+        else:
+            result = sympy.sympify(operation.rstrip())
+            self._output.insert(tk.END, result)
 
+    def _clear_screen(self):  # Clears output text box
+        self._output.delete("1.0", tk.END)
+        logging.info("Cleared Screen")
 
-        
-        
-def start_calculator():  # This function is called by main to run calculator
-    root = ttk.Tk()
-    CalculatorApp(root)
-    root.mainloop()
+    def _stop(self):
+        self._root.destroy()
+
