@@ -1,6 +1,6 @@
 # import tkinter as tk
 import tkinter as tk
-from GUI_CONSTANTS import WindowButtons, WindowDimensions, NumberButtons, OperationButtons, OutputScreen
+from constants import WindowButtons, WindowDimensions, NumberButtons, OperationButtons, OutputScreen
 import sympy
 import logging
 
